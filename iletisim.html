@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_iletisim.css">
+    <link rel="shortcut icon" href="images/favicon1.png" type="image/x-icon">
+    <title>İletişim Formu</title>
+</head>
+<body>
+    <header>
+        <div class="container"> 
+            <h1>Eğitim Platformu</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" target="_blank">Ana Sayfa </a></li>
+                    <li><a href="#">Dersler </a></li>
+                    <li><a href="#">Eğitmenler </a></li>
+                    <li><a href="iletisim.html" target="_blank">İletişim </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="form_container">
+        <h2>İletişim Formu</h2>
+        <form id="iletisim-form">
+            <div class="form-row">
+                <div class="form-group inline">
+                    <label for="ad">Ad:</label>
+                    <input type="text" id="ad" name="ad">
+                </div>
+                <div class="form-group inline">
+                    <label for="soyad">Soyad:</label>
+                    <input type="text" id="soyad" name="soyad">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mail">E-posta:</label>
+                    <input type="email" id="mail" name="mail">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group inline">
+                    <label for="dogum-yili">Doğum Yılı:</label>
+                    <input type="number" id="dogum-yili" name="dogum-yili" value="1995">
+                </div>
+                <div class="form-group inline">
+                    <label for="il">İl:</label>
+                    <select id="il" name="il">
+                        <option value="" disabled selected>Şehir Seçiniz</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mesaj">Mesajınız:</label>
+                    <textarea id="mesaj" name="mesaj" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit">Gönder</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <div class="container" >
+            <p>&copy; 2024 Eğitim Platformu. İrem Topuzcu</p>
+        </div>
+    </footer>
+
+    <script>
+        // Türkiye'nin 81 ilini bir dizi içinde tanımla
+        var iller = [
+            "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
+            "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+            "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane",
+            "Hakkari", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli",
+            "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş",
+            "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+            "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+            "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye",
+            "Düzce"
+        ];
+
+        // İlleri seçenekler olarak ekle
+        var ilSelect = document.getElementById("il");
+        iller.forEach(function(il) {
+            var option = document.createElement("option");
+            option.text = il;
+            option.value = il;
+            ilSelect.add(option);
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("iletisim-form");
+            const adInput = document.getElementById("ad");
+            const soyadInput = document.getElementById("soyad");
+            const mailInput = document.getElementById("mail");
+            const yasInput = document.getElementById("dogum-yili");
+            const mesajInput = document.getElementById("mesaj");
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); // Formun varsayılan davranışını engelle
+
+                // Arka plan rengini varsayılan yap
+                document.body.style.backgroundColor = "#F5E8DD";
+
+                // Tüm verilerin doldurulması zorunluluğu kontrolü
+                if (!adInput.value || !soyadInput.value || !mailInput.value || !yasInput.value || !mesajInput.value) {
+                    document.body.style.backgroundColor = "red";
+                    alert("Lütfen tüm alanları doldurun.");
+                    
+                    return;
+                }
+
+                // İsim bilgisinin 3 harften az girilmesi kontrolü
+                if (adInput.value.length < 3) {
+                    alert("İsim en az 3 harften oluşmalıdır.");
+                    document.body.style.backgroundColor = "red";
+                    return;
+                }
+
+                // Yaşın 18'den büyük olması zorunluluğu kontrolü
+                const yas = new Date().getFullYear() - parseInt(yasInput.value);
+                if (yas < 18) {
+                    alert("Yaşınız 18'den küçük olamaz.");
+                    document.body.style.backgroundColor = "red";
+                    return;
+                }
+
+                // Girdi mesajının 100 karakterden fazla olup olmadığını kontrol et
+                 if (mesajInput.value.length > 100) {
+                     document.body.style.backgroundColor = "red";
+                     alert("Mesajınız 100 karakterden fazla olamaz.");
+                     return;
+                    }
+
+                // Form gönderim işlemi başarılı olduğunda
+                console.log("Ad:", adInput.value);
+                console.log("Soyad:", soyadInput.value);
+                console.log("E-posta:", mailInput.value);
+                console.log("Doğum Yılı:", yasInput.value);
+                console.log("Mesaj:", mesajInput.value);
+
+                // Form gönderim işlemi başarılı olduğunda arka plan rengini yeşil yap
+                document.body.style.backgroundColor = "#609966";
+            });
+
+
+
+
+
+
+
+        });
+    </script>   
+</body>
+</html>
