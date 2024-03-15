@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_adminPanel.css">
+    <link rel="shortcut icon" href="images/favicon1.png" type="image/x-icon">
+    <title>Admin Paneli</title>
+    <script>
+        
+        window.onload = function() {
+    
+            let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+
+            document.addEventListener('click', function() {
+                
+                clickCount++;
+                
+                localStorage.setItem('clickCount', clickCount);
+            });
+    
+    
+            let mouseMoveTime = parseInt(localStorage.getItem('mouseMoveTime')) || 0;
+            
+            
+            document.addEventListener('mousemove', function() {
+                mouseMoveTime++;
+            });
+            
+            
+            setInterval(function() {
+                localStorage.setItem('mouseMoveTime', mouseMoveTime);
+            }, 1000);
+}
+    </script>
+    
+</head>
+<body>
+    <header>
+        <div class="container"> 
+            <h1>Eğitim Platformu Admin Paneli</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" target="_blank">Ana Sayfa </a></li>
+                    <li><a href="#">Dersler </a></li>
+                    <li><a href="adminGiris.html">Admin Giriş </a></li>
+                    <li><a href="iletisim.html" target="_blank">İletişim </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <h2>İletişim Formu Verileri</h2>
+        <div id="clickAndMoveInfo" class="clickAndMoveInfo"></div>
+        <div id="veri-listesi"></div>
+    </div>
+
+    <footer>
+        <div class="container" >
+            <p>&copy; 2024 Eğitim Platformu. İrem Topuzcu</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const veriListesi = document.getElementById("veri-listesi");
+    
+            
+            const storedFormData = JSON.parse(localStorage.getItem('iletisimFormData')) || [];
+    
+            
+            let adKarakterSayisi = localStorage.getItem('adKarakterSayisi') || 0;
+            let adDegisimSayisi = localStorage.getItem('adDegisimSayisi') || 0;
+            let soyadKarakterSayisi = localStorage.getItem('soyadKarakterSayisi') || 0;
+            let soyadDegisimSayisi = localStorage.getItem('soyadDegisimSayisi') || 0;
+            let mailKarakterSayisi = localStorage.getItem('mailKarakterSayisi') || 0;
+            let mailDegisimSayisi = localStorage.getItem('mailDegisimSayisi') || 0;
+            let mesajKarakterSayisi = localStorage.getItem('mesajKarakterSayisi') || 0;
+            let mesajDegisimSayisi = localStorage.getItem('mesajDegisimSayisi') || 0;
+
+        
+        
+        const clickAndMoveInfoDiv = document.createElement("div");
+        clickAndMoveInfoDiv.id = "clickAndMoveInfo";
+        clickAndMoveInfoDiv.classList.add("clickAndMoveInfo");
+
+        
+        let clickCount = localStorage.getItem('clickCount') || 0;
+        let mouseMoveTime = localStorage.getItem('mouseMoveTime') || 0;
+
+        
+        clickAndMoveInfoDiv.innerHTML = `
+            <p><strong>Tıklama Sayısı:</strong> ${clickCount}</p>
+            <p><strong>Toplam Hareket Süresi:</strong> ${mouseMoveTime} saniye</p>
+        `;
+
+        
+        const clickAndMoveInfo = document.getElementById("clickAndMoveInfo");
+        clickAndMoveInfo.appendChild(clickAndMoveInfoDiv);
+
+    
+            let hataSayisi = localStorage.getItem('hataSayisi') || 0;
+    
+            
+            const bilgiDiv = document.createElement("div");
+            bilgiDiv.classList.add("bilgi");
+            bilgiDiv.innerHTML = `
+                <p><strong>Ad:</strong> Karakter Sayısı: ${adKarakterSayisi}, Değişim Sayısı: ${adDegisimSayisi}</p>
+                <p><strong>Soyad:</strong> Karakter Sayısı: ${soyadKarakterSayisi}, Değişim Sayısı: ${soyadDegisimSayisi}</p>
+                <p><strong>Mail:</strong> Karakter Sayısı: ${mailKarakterSayisi}, Değişim Sayısı: ${mailDegisimSayisi}</p>
+                <p><strong>Mesaj:</strong> Karakter Sayısı: ${mesajKarakterSayisi}, Değişim Sayısı: ${mesajDegisimSayisi}</p>
+                <p><strong>Hata Sayısı:</strong> ${hataSayisi}</p>
+            `;
+            veriListesi.appendChild(bilgiDiv);
+    
+            
+            storedFormData.forEach(function(formData) {
+                const veriDiv = document.createElement("div");
+                veriDiv.classList.add("veri");
+    
+               
+                for (const key in formData) {
+                    if (formData.hasOwnProperty(key)) {
+                        const p = document.createElement("p");
+                        p.innerHTML = `<strong>${key}:</strong> ${formData[key]}`;
+                        veriDiv.appendChild(p);
+                    }
+                }
+    
+                
+                veriListesi.appendChild(veriDiv);
+            });
+        });
+    </script>
+    
+    
+    
+</body>
+</html>

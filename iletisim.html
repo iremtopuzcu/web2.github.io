@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_iletisim.css">
+    <link rel="shortcut icon" href="images/favicon1.png" type="image/x-icon">
+    <title>İletişim Formu</title>
+    <script>
+        
+        window.onload = function() {
+    
+            let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+
+            document.addEventListener('click', function() {
+                
+                clickCount++;
+                
+                localStorage.setItem('clickCount', clickCount);
+            });
+            
+                        
+                let mouseMoveTime = parseInt(localStorage.getItem('mouseMoveTime')) || 0;
+                
+                
+                document.addEventListener('mousemove', function() {
+                    mouseMoveTime++;
+                });
+                
+                
+                setInterval(function() {
+                    localStorage.setItem('mouseMoveTime', mouseMoveTime);
+                }, 1000);
+}
+    </script>
+    
+</head>
+<body>
+    <header>
+        <div class="container"> 
+            <h1>Eğitim Platformu</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html" target="_blank">Ana Sayfa </a></li>
+                    <li><a href="#">Dersler </a></li>
+                    <li><a href="adminGiris.html">Admin Giriş </a></li>
+                    <li><a href="iletisim.html" target="_blank">İletişim </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="form_container">
+        <h2>İletişim Formu</h2>
+        <form id="iletisim-form">
+            <div class="form-row">
+                <div class="form-group inline">
+                    <label for="ad">Ad:</label>
+                    <input type="text" id="ad" name="ad">
+                </div>
+                <div class="form-group inline">
+                    <label for="soyad">Soyad:</label>
+                    <input type="text" id="soyad" name="soyad">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mail">E-posta:</label>
+                    <input type="email" id="mail" name="mail">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group inline">
+                    <label for="dogum-yili">Doğum Yılı:</label>
+                    <input type="number" id="dogum-yili" name="dogum-yili" value="1995">
+                </div>
+                <div class="form-group inline">
+                    <label for="il">İl:</label>
+                    <select id="il" name="il">
+                        <option value="" disabled selected>Şehir Seçiniz</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mesaj">Mesajınız:</label>
+                    <textarea id="mesaj" name="mesaj" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit">Gönder</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <div class="container" >
+            <p>&copy; 2024 Eğitim Platformu. İrem Topuzcu</p>
+        </div>
+    </footer>
+
+    <script>
+        
+        var iller = [
+            "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
+            "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+            "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane",
+            "Hakkari", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli",
+            "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş",
+            "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+            "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+            "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye",
+            "Düzce"
+        ];
+    
+        
+        var ilSelect = document.getElementById("il");
+        iller.forEach(function(il) {
+            var option = document.createElement("option");
+            option.text = il;
+            option.value = il;
+            ilSelect.add(option);
+        });
+    
+        document.addEventListener("DOMContentLoaded", function() { 
+        
+    
+            const adInput = document.getElementById('ad');
+            var adCharacterCount = parseInt(localStorage.getItem('adKarakterSayisi')) || 0;
+            var adChangeCount = parseInt(localStorage.getItem('adDegisimSayisi')) || 0;
+
+            adInput.addEventListener('input', function() {
+                adCharacterCount +=  adInput.value.length;
+                console.log('Ad input alanına ' + adCharacterCount + ' karakter girildi.');
+                localStorage.setItem('adKarakterSayisi', adCharacterCount);
+            });
+
+            adInput.addEventListener('change', function() {
+                adChangeCount++;
+                console.log('Ad input alanı ' + adChangeCount + ' kez değiştirildi.');
+                localStorage.setItem('adDegisimSayisi', adChangeCount);
+            });
+
+            
+            const soyadInput = document.getElementById('soyad');
+            var soyadCharacterCount = parseInt(localStorage.getItem('soyadKarakterSayisi')) || 0;
+            var soyadChangeCount = parseInt(localStorage.getItem('soyadDegisimSayisi')) || 0;
+
+            soyadInput.addEventListener('input', function() {
+                soyadCharacterCount += soyadInput.value.length;
+                console.log('Soyad input alanına ' + soyadCharacterCount + ' karakter girildi.');
+                localStorage.setItem('soyadKarakterSayisi', soyadCharacterCount);
+            });
+
+            soyadInput.addEventListener('change', function() {
+                soyadChangeCount++;
+                console.log('Soyad input alanı ' + soyadChangeCount + ' kez değiştirildi.');
+                localStorage.setItem('soyadDegisimSayisi', soyadChangeCount);
+            });
+
+            
+            const mailInput = document.getElementById('mail');
+            var mailCharacterCount = parseInt(localStorage.getItem('mailKarakterSayisi')) || 0;
+            var mailChangeCount = parseInt(localStorage.getItem('mailDegisimSayisi')) || 0;
+
+            mailInput.addEventListener('input', function() {
+                mailCharacterCount += mailInput.value.length;
+                console.log('Mail input alanına ' + mailCharacterCount + ' karakter girildi.');
+                localStorage.setItem('mailKarakterSayisi', mailCharacterCount);
+            });
+
+            mailInput.addEventListener('change', function() {
+                mailChangeCount++;
+                console.log('Mail input alanı ' + mailChangeCount + ' kez değiştirildi.');
+                localStorage.setItem('mailDegisimSayisi', mailChangeCount);
+            });
+
+            
+            const mesajInput = document.getElementById('mesaj');
+            var mesajCharacterCount = parseInt(localStorage.getItem('mesajKarakterSayisi')) || 0;
+            var mesajChangeCount = parseInt(localStorage.getItem('mesajDegisimSayisi')) || 0;
+
+            mesajInput.addEventListener('input', function() {
+                mesajCharacterCount +=  mesajInput.value.length;
+                console.log('Mesaj input alanına ' + mesajCharacterCount + ' karakter girildi.');
+                localStorage.setItem('mesajKarakterSayisi', mesajCharacterCount);
+            });
+
+            mesajInput.addEventListener('change', function() {
+                mesajChangeCount++;
+                console.log('Mesaj input alanı ' + mesajChangeCount + ' kez değiştirildi.');
+                localStorage.setItem('mesajDegisimSayisi', mesajChangeCount);
+            });
+
+            
+            document.getElementById('iletisim-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                
+                var hataSayisi = parseInt(localStorage.getItem('hataSayisi')) || 0;
+
+                
+                const ad = adInput.value;
+                const soyad = soyadInput.value;
+                const mail = mailInput.value;
+                const dogumYili = document.getElementById('dogum-yili').value;
+                const il = document.getElementById('il').value;
+                const mesaj = mesajInput.value;
+
+                
+                if (!ad || !soyad || !mail || !dogumYili || !il || !mesaj) {
+                    hataSayisi++;
+                    alert("Lütfen tüm alanları doldurun.");
+                    document.body.style.backgroundColor = "red";
+                }
+
+                
+                if (ad.length < 3) {
+                    hataSayisi++;
+                    alert("İsim en az 3 harften oluşmalıdır.");
+                    document.body.style.backgroundColor = "red";
+                }
+
+                
+                const yas = new Date().getFullYear() - parseInt(dogumYili);
+                if (yas < 18) {
+                    hataSayisi++;
+                    alert("Yaşınız 18'den küçük olamaz.");
+                    document.body.style.backgroundColor = "red";
+                }
+
+                
+                if (mesaj.length > 100) {
+                    hataSayisi++;
+                    alert("Mesajınız 100 karakterden fazla olamaz.");
+                    document.body.style.backgroundColor = "red";
+                }
+
+                
+                if (hataSayisi === 0) {
+                    const formData = {
+                        ad: ad,
+                        soyad: soyad,
+                        mail: mail,
+                        dogumYili: dogumYili,
+                        il: il,
+                        mesaj: mesaj
+                    };
+
+                    saveFormData(formData);
+                }
+                else {
+                
+                localStorage.setItem('hataSayisi', hataSayisi);
+            }
+            });
+
+            function saveFormData(formData) {
+                const storedFormData = JSON.parse(localStorage.getItem('iletisimFormData')) || [];
+
+                storedFormData.push(formData);
+
+                localStorage.setItem('iletisimFormData', JSON.stringify(storedFormData));
+
+                
+                
+
+                
+                localStorage.setItem('hataSayisi', hataSayisi);
+
+                alert("Form verileriniz başarıyla kaydedildi!");
+
+                document.body.style.backgroundColor = "#609966";
+            }
+
+        })
+    </script>
+    
+</body>
+</html>
